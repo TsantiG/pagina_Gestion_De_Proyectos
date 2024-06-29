@@ -1,0 +1,66 @@
+USE dbcrud;
+
+INSERT INTO especialidades(nombre) VALUES ("Ninguna"),
+("Programador"),
+("Tecnico de soporte"),
+("Analista"),
+("Administrador"),
+("Consultor"),
+("Ciberseguridad"),
+("Diseñador");
+                                        
+INSERT INTO tareas(nombre) VALUES ("Ninguna"),
+("Front-End"),
+("Back-End"),
+("Soporte");
+
+
+
+base de datos:
+
+DROP DATABASE IF EXISTS dbcrud;
+
+
+-- Crear la tabla especialidades
+CREATE TABLE especialidades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
+);
+
+-- Crear la tabla usuarios
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefono VARCHAR(12) NOT NULL,
+    especialidad_id INT,
+    contraseña VARCHAR(50) NOT NULL,
+    FOREIGN KEY (especialidad_id) REFERENCES especialidades(id)
+);
+
+-- Crear la tabla proyectos
+CREATE TABLE proyectos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    num_proyecto VARCHAR(20) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL
+);
+
+-- Crear la tabla tareas
+CREATE TABLE tareas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+-- Crear la tabla miembros
+CREATE TABLE miembros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    num_proyecto_asignado INT,
+    tarea_id INT,
+    horas_trabajadas INT NOT NULL,
+    usuario_id INT,
+    FOREIGN KEY (num_proyecto_asignado) REFERENCES proyectos(id),
+    FOREIGN KEY (tarea_id) REFERENCES tareas(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
